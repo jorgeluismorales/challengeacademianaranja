@@ -1,7 +1,7 @@
 const express = require ("express");
 const cors = require("cors");
 require("dotenv").config();
-const { dbConnection } = require("./database/config/db.config");
+const { dbConnection } = require("./database/config/dbConfig");
 
 const app = express ();
 
@@ -15,7 +15,9 @@ app.use(express.urlencoded({ extended: true }));
 
 const port = process.env.PORT || 5000;
 
-app.use("/cities", require("./routes/city.route"));
+app.use("/cities", require("./routes/cityRoute"));
+app.use("/itineraries", require("./routes/itineraryRoute"));
+//app.use("/users", require("./routes/userRoute"));
 
 app.listen (port, () => {
 
