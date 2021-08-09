@@ -1,4 +1,4 @@
-const City = require("../database/models/city.model");
+const City = require("../database/models/cityModel");
 
 const getAll = async () => await City.find();
 const count = async () => await City.countDocuments();
