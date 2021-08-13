@@ -17,7 +17,7 @@ const getCities = async(req = request,  res = response) =>  {
       res.status(200).json({
         ok: true,
         message:  'Ciudades',
-        cities: citiesDb,
+        response: citiesDb,
         total: count
       })  
     } catch (error) {

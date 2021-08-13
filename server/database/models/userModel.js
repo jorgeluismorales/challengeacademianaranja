@@ -17,4 +17,4 @@ UserSchema.set('toJSON', {
     }
 })
 
-module.exports = model('City', UserSchema);
+module.exports = model('User', UserSchema);

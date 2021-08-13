@@ -2,7 +2,7 @@ const { request, response } = require('../itineraryModule');
 const itineraryRepository = require('../../repositories/itineraryRepositories');
 const cityRepository = require('../../repositories/cityRepositories');
 
-const getItineraries = async (req =request, res= response) => {
+const getItineraries = async (req = request, res = response) => {
 
     try {
         const itinerariesDb = await itineraryRepository.getAll()
@@ -32,7 +32,7 @@ const getItineraries = async (req =request, res= response) => {
 
 }
 
-const getItinerary = async (req=request, res=response) => {
+const getItinerary = async (req = request, res = response) => {
 
     const id = req.params.id
 
@@ -63,36 +63,34 @@ const getItinerary = async (req=request, res=response) => {
     }
 }
 
-const getItineraryByCityName = async (req=request, res=response) => {
+const getItineraryByCityName = async (req = request, res = response) => {
 
-    const name  = req.params.name
-    
-    
-  try {
-    const city = await cityRepository.getCityByName(name)
-    console.log(city)
-      const itineraryDb  = await itineraryRepository.getItinerariesByCity(city.id)
-console.log(itineraryDb)
-      if(!itineraryDb){
-        return  res.status(400).json({
-          ok:false,
-          message:  '',
-          err
+    const name = req.params.name
+    try {
+        const cityData = await cityRepository.findOneCity(name)
+        const { id } = cityData;
+        id.toString()
+        const itineraryDb = await itineraryRepository.getItinerariesByCity(id)
+        if (!itineraryDb) {
+            return res.status(400).json({
+                ok: false,
+                message: '',
+                err
+            })
+        }
+
+        return res.status(200).json({
+            ok: true,
+            message: 'Itinerario por ciudad',
+            city: itineraryDb,
         })
-      }
-  
-     return res.status(200).json({
-        ok: true,
-        message:  'Itinerario por ciudad',
-        city: itineraryDb,
-      })  
 
     } catch (error) {
-      res.status(500).json({
-        ok:false,
-        message:  'Error Interno del Servidor',
-        error
-      })
+        res.status(500).json({
+            ok: false,
+            message: 'Error Interno del Servidor',
+            error
+        })
     }
 }
 
